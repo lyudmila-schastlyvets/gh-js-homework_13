@@ -83,7 +83,7 @@ export default class Form extends Component {
             <div>
                 <div className="container">
                     <div className="form-group row">
-                        <div className="col-md-6 col-lg-4">
+                        <div className="col-md-6 offset-lg-2 col-lg-4">
                             <label htmlFor="name">Name (required):</label>
                             <input
                                 className="form-control"
@@ -107,7 +107,7 @@ export default class Form extends Component {
                         </div>
                     </div>
                     <div className="form-group row">
-                        <div className="col-md-6 col-lg-4">
+                        <div className="col-md-6 offset-lg-2 col-lg-4">
                             <label htmlFor="phone">Phone Number:</label>
                             <input
                                 className="form-control"
@@ -129,7 +129,7 @@ export default class Form extends Component {
                         </div>
                     </div>
                     <div className="form-group row">
-                        <div className="col-md-6 col-lg-4">
+                        <div className="col-md-6 offset-lg-2 col-lg-4">
                             <label htmlFor="postcode">Post Code (required):</label>
                             <input
                                 className="form-control"
