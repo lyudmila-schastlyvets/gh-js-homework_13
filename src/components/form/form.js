@@ -33,7 +33,7 @@ export default class Form extends Component {
         this.setState({
             startDate: target,
             user: update(this.state.user, {
-                'dateofbirth': {$set: target.toString()}
+                'dateofbirth': {$set: moment(target).format("YYYY/MM/DD")}
             })
         })
 
@@ -53,9 +53,9 @@ export default class Form extends Component {
         if (this.state.user.postcode === '') {
             errorMessages.postcode_error = 'The field is required'
         }
-        // if (this.state.user.dateofbirth === null) {
-        //     errorMessages.date_error = 'The field is required'
-        // }
+        if (this.state.user.dateofbirth === null) {
+            errorMessages.date_error = 'The field is required'
+        }
         if (!emailVal) {
             errorMessages.email_error = 'Enter correct email'
         }
@@ -145,6 +145,7 @@ export default class Form extends Component {
                             <DatePicker
                                 selected={this.state.startDate}
                                 onChange={this.handleChange}
+                                disabledKeyboardNavigation
                                 name="dateofbirth"
                                 dateFormat="YYYY/MM/DD"
                             />
