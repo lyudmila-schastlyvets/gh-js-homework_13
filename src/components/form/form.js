@@ -12,7 +12,8 @@ export default class Form extends Component {
         this.state = {
             user: this.props.user,
             startDate: moment(),
-            errors: {}
+            errors: {},
+            valid: false
         }
         this.changeInput = this.changeInput.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -22,12 +23,44 @@ export default class Form extends Component {
         console.log('props in component', this.props)
     }
     changeInput ({target: {value, name}}) {
+        var errorMessages = this.state.errors
+        let emailVal = false
+        if (name === 'name') {
+            errorMessages.name_error = ''
+            if (value === '') {
+                errorMessages.name_error = 'The field is required'
+            }
+        }
+        if (name === 'email') {
+            errorMessages.email_error = ''
+            if (value === '') {
+                errorMessages.email_error = 'The field is required'
+            } else {
+                emailVal = EMAIL_VALIDATION_REGEX.test(value)
+            }
+            if (!emailVal) {
+                errorMessages.email_error = 'Enter correct email'
+            }
+        }
+        if (name === 'postcode') {
+            errorMessages.postcode_error = ''
+            if (value === '') {
+                errorMessages.postcode_error = 'The field is required'
+            }
+        }
+        if (name === 'dateofbirth') {
+            if (value === null) {
+                errorMessages.date_error = 'The field is required'
+            }
+        }
+        this.setState({
+            errors: errorMessages
+        })
         this.setState({
             user: update(this.state.user, {
                 [name]: {$set: value}
             })
         })
-
     }
     handleChange (target) {
         this.setState({
@@ -40,8 +73,8 @@ export default class Form extends Component {
     }
     submitData (e) {
         e.preventDefault()
-        var errorMessages = {}
-        var emailVal = true
+        let errorMessages = {}
+        let emailVal = true
         if (this.state.user.name === '') {
             errorMessages.name_error = 'The field is required'
         }
@@ -62,11 +95,9 @@ export default class Form extends Component {
         this.setState({
             errors: errorMessages
         })
-        this.props.changeStateProps('errors', this.state.errors)
-        if (Object.keys(errorMessages).length === 0) {
+        if (Object.keys(this.state.errors).length === 0) {
             this.props.changeStateProps('user', this.state.user)
             this.setState({
-                errors: {},
                 user: {
                     name: '',
                     email: '',
@@ -89,8 +120,10 @@ export default class Form extends Component {
                                 className="form-control"
                                 type="text"
                                 onChange={this.changeInput}
+                                onBlur={this.changeInput}
                                 placeholder="Enter name"
                                 name="name"
+                                value={this.state.user.name}
                             />
                             <span className="error_message">{this.state.errors.name_error}</span>
                         </div>
@@ -102,6 +135,8 @@ export default class Form extends Component {
                                 placeholder="test@test.com"
                                 name="email"
                                 onChange={this.changeInput}
+                                onBlur={this.changeInput}
+                                value={this.state.user.email}
                             />
                             <span className="error_message">{this.state.errors.email_error}</span>
                         </div>
@@ -111,10 +146,12 @@ export default class Form extends Component {
                             <label htmlFor="phone">Phone Number:</label>
                             <input
                                 className="form-control"
-                                type="text"
+                                type="tel"
                                 onChange={this.changeInput}
+                                onBlur={this.changeInput}
                                 placeholder="(***)**-**-***"
                                 name="phone"
+                                value={this.state.user.phone}
                             />
                         </div>
                         <div className="col-md-6 col-lg-4">
@@ -125,6 +162,8 @@ export default class Form extends Component {
                                 placeholder="Country, City etc."
                                 name="address"
                                 onChange={this.changeInput}
+                                onBlur={this.changeInput}
+                                value={this.state.user.address}
                             />
                         </div>
                     </div>
@@ -135,8 +174,10 @@ export default class Form extends Component {
                                 className="form-control"
                                 type="text"
                                 onChange={this.changeInput}
+                                onBlur={this.changeInput}
                                 placeholder="*****"
                                 name="postcode"
+                                value={this.state.user.postcode}
                             />
                             <span className="error_message">{this.state.errors.postcode_error}</span>
                         </div>
@@ -145,9 +186,11 @@ export default class Form extends Component {
                             <DatePicker
                                 selected={this.state.startDate}
                                 onChange={this.handleChange}
+                                onBlur={this.changeInput}
                                 disabledKeyboardNavigation
                                 name="dateofbirth"
                                 dateFormat="YYYY/MM/DD"
+                                value={this.state.user.dateofbirth}
                             />
                             <span className="error_message">{this.state.errors.date_error}</span>
                         </div>
