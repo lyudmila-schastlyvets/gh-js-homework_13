@@ -37,3 +37,7 @@ label {
   font-size: 0.875rem;
   display: flex;
 }
+
+.form-group {
+  min-height: 92px;
+}

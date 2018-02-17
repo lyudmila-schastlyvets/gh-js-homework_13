@@ -13,7 +13,7 @@ class App extends Component {
                 <h1 className='App-title'>Homework 13</h1>
             </header>
             <h2>My Account Information</h2>
-            <Form testName='Kristina' />
+            <Form />
             <View />
         </div>
     );
