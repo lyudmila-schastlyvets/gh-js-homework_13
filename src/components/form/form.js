@@ -19,11 +19,8 @@ export default class Form extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.submitData = this.submitData.bind(this)
     }
-    componentDidMount () {
-        console.log('props in component', this.props)
-    }
     changeInput ({target: {value, name}}) {
-        var errorMessages = this.state.errors
+        let errorMessages = this.state.errors
         let emailVal = false
         if (name === 'name') {
             errorMessages.name_error = ''
@@ -95,7 +92,7 @@ export default class Form extends Component {
         this.setState({
             errors: errorMessages
         })
-        if (Object.keys(this.state.errors).length === 0) {
+        if (Object.keys(errorMessages).length === 0) {
             this.props.changeStateProps('user', this.state.user)
             this.setState({
                 user: {
@@ -106,7 +103,6 @@ export default class Form extends Component {
                     address: ''
                 }
             })
-            this.props.changeStateProps('user', this.state.user)
         }
     }
     render () {

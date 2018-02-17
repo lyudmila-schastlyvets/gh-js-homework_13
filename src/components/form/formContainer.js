@@ -3,11 +3,8 @@ import { changeStateProps } from '../../actions'
 import Form from './form'
 
 const mapStateToProps = (state, ownProps) => {
-    console.log('state', state)
-    console.log('ownProps', ownProps)
     return {
         user: state.main.user,
-        isUserEqual: state.main.name === ownProps.testName,
         ...ownProps
     }
 }

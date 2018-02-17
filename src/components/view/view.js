@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 
 export default class View extends Component {
-    componentDidMount () {
-        console.log('props in component View', this.props)
-    }
     render () {
         return (
             <div>
